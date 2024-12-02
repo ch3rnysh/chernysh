@@ -1,0 +1,65 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="converter">
+        <h1>Currency Converter</h1>
+        <label for="amount">Amount:</label>
+        <input type="number" id="amount" placeholder="Enter amount" />
+        
+        <label for="fromCurrency">From:</label>
+        <select id="fromCurrency">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="KZT">KZT</option>
+            <option value="RUB">RUB</option>
+            <option value="CNY">CNY</option>
+        </select>
+
+        <label for="toCurrency">To:</label>
+        <select id="toCurrency">
+            <option value="USD">USD</option>
+            <option value="EUR">EUR</option>
+            <option value="KZT">KZT</option>
+            <option value="RUB">RUB</option>
+            <option value="CNY">CNY</option>
+        </select>
+
+        <button onclick="convertCurrency()">Convert</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        const exchangeRates = {
+            USD: { USD: 1, EUR: 0.93, KZT: 470, RUB: 79.5, CNY: 7.13 },
+            EUR: { USD: 1.08, EUR: 1, KZT: 505, RUB: 85.5, CNY: 7.66 },
+            KZT: { USD: 0.0021, EUR: 0.002, KZT: 1, RUB: 0.16, CNY: 0.015 },
+            RUB: { USD: 0.0126, EUR: 0.0117, KZT: 6.3, RUB: 1, CNY: 0.09 },
+            CNY: { USD: 0.14, EUR: 0.13, KZT: 66.6, RUB: 10.5, CNY: 1 }
+        };
+
+        function convertCurrency() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const fromCurrency = document.getElementById('fromCurrency').value;
+            const toCurrency = document.getElementById('toCurrency').value;
+
+            if (isNaN(amount) || amount <= 0) {
+                document.getElementById('result').textContent = "Please enter a valid amount.";
+                return;
+            }
+
+            const rate = exchangeRates[fromCurrency][toCurrency];
+            const convertedAmount = (amount * rate).toFixed(2);
+
+            document.getElementById('result').textContent = 
+                `${amount} ${fromCurrency} = ${convertedAmount} ${toCurrency}`;
+        }
+    </script>
+</body>
+</html>
